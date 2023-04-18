@@ -1,28 +1,30 @@
-.wraper {
-    background-color: rgb(183, 183, 197);
-    padding: 20px;
-    text-align: right;
-}
-
-.mes-anterior {
-    opacity: 0.5;
-}
-
 .days-week {
-
-    padding: 10px 0;
     border-bottom: 2px solid rgb(10, 3, 1);
-   
 }
 
-.days-week span {
-    color: rgb(248, 248, 248);
-    font-weight: bold;
-    font-size: 12px;
-
+.number-days td {
+    color: rgb(20, 20, 20) !important;
 }
 
-.number-days span {
-    color: rgb(20, 20, 20);
-    padding: 10px 0;
+.today {
+    color: rgb(245, 140, 140) !important;
+}
+
+.other-months {
+    opacity: 0.5 !important;
+}
+
+.input-search {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.input-search select {
+    padding: 0 10px;
+    width: 200px;
+    border: 1px solid #f5ebeb;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: #58595B;
+    color: white !important;
 }
