@@ -3,18 +3,20 @@ var MyWidget = SuperWidget.extend({
     searchFilter: [],
     projectStatusFilter: [],
     systemFilter: [],
+    calendarMonth: 0,
+    calendarYear: 0,
     firstDayMonth: function (day) { return new Date(day.getFullYear(), day.getMonth(), 1) },
     diffOfDaysToStartOfCalendar: function (day) { return MyWidget.firstDayMonth(day).getDay() - 1 },
-    startOfCalendar: function (day) { return MyWidget.diffOfDaysToStartOfCalendar(day) <= 0 ? MyWidget.firstDayMonth(day) : new Date(day.getFullYear(), day.getMonth(), - MyWidget.diffOfDaysToStartOfCalendar(day)) },
+    startOfCalendar: function (day) { return MyWidget.firstDayMonth(day).getDay() == 0 ? MyWidget.firstDayMonth(day) : new Date(day.getFullYear(), day.getMonth(), - MyWidget.diffOfDaysToStartOfCalendar(day)) },
     lastDayMonth: function (day) { return new Date(day.getFullYear(), day.getMonth() + 1, 0) },
-    diffOfDaysToEndOfCalendar: function (day) { return 6 - MyWidget.lastDayMonth(day).getDay() },
-    endOfCalendar: function (day) { return MyWidget.diffOfDaysToEndOfCalendar(day) <= 0 ? MyWidget.lastDayMonth(day) : new Date(MyWidget.lastDayMonth(day).getFullYear(), MyWidget.lastDayMonth(day).getMonth() + 1, MyWidget.diffOfDaysToEndOfCalendar(day) + 1) },
-
-    //método iniciado quando a widget é carregada
-    init: function () {
-        const today= new Date()
-        const endOfCalendar = MyWidget.endOfCalendar(today)
-        let day = MyWidget.startOfCalendar(today)
+    diffOfDaysToEndOfCalendar: function (day) { return 5 - MyWidget.lastDayMonth(day).getDay() },
+    endOfCalendar: function (day) { return MyWidget.lastDayMonth(day) == 0 ? MyWidget.lastDayMonth(day) : new Date(MyWidget.lastDayMonth(day).getFullYear(), MyWidget.lastDayMonth(day).getMonth() + 1, MyWidget.diffOfDaysToEndOfCalendar(day) + 1) },
+    calendarUpdate: function (dateCalendar) {
+        const today = new Date()
+        if (!(dateCalendar instanceof Date))
+            dateCalendar = today
+        const endOfCalendar = MyWidget.endOfCalendar(dateCalendar)
+        let day = MyWidget.startOfCalendar(dateCalendar)
         let html = ''
         while (day <= endOfCalendar) {
             html += day.getDay() === 0 ? '<tr>' : ''
@@ -30,7 +32,20 @@ var MyWidget = SuperWidget.extend({
             html += day.getDay() === 6 ? '</tr>' : ''
             day.setDate(day.getDate() + 1)
         }
-        $('.number-days').append(html)
+        $('.number-days').empty().append(html)
+        MyWidget.calendarMonth = dateCalendar.getMonth()
+        MyWidget.calendarYear = dateCalendar.getFullYear()
+        var month = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"][MyWidget.calendarMonth];
+        $('#fullmonthandyear').html(`${month} de ${MyWidget.calendarYear}`)
+    }, calendarNextMonth: function () {
+       MyWidget.calendarUpdate(new Date(MyWidget.calendarYear, MyWidget.calendarMonth + 1, 1))
+    },
+    calendarReturnMonth: function () {
+       MyWidget.calendarUpdate(new Date(MyWidget.calendarYear, MyWidget.calendarMonth, 0))
+    },
+    //método iniciado quando a widget é carregada
+    init: function () {
+        MyWidget.calendarUpdate()
         MyWidget.reloadSearchFilter()
         MyWidget.reloadProjectStatusFilter()
         MyWidget.reloadSystemFilter()
@@ -38,7 +53,10 @@ var MyWidget = SuperWidget.extend({
     //BIND de eventos
     bindings: {
         local: {
-            'SearchFilter': ['change_reloadSearchFilter']
+            'SearchFilter': ['change_reloadSearchFilter'],
+            'btnreturn':['click_calendarReturnMonth'],
+            'btnnext':['click_calendarNextMonth'],
+            'btntoday':['click_calendarUpdate'],
         },
         global: {}
     },

@@ -30,6 +30,13 @@
                             <label for="systemfilter">Filtros do Sistema</label>
                             <input id="systemfilter" type="text" class="form-control " placeholder="Pesquisar..">
                         </div>
+                        <div class="col-md-6">
+                            <div> <label> Exibir somente favoritos </label></div>
+                            <div class="switch switch-primary">
+                                <input class="switch-input" type="checkbox" id="switch-1-1" />
+                                <label class="switch-button" for="switch-1-1">Toggle</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,6 +48,12 @@
                         Calendário</h2>
                 </div>
                 <div class="panel-body">
+                    <div class="col-md-12 btn-calendar ">
+                        <button type="button" class="btn btn-primary col-md-1" data-btnreturn> &lt; </button>
+                        <button type="button" class="btn btn-default col-md-2" data-btntoday> hoje </button><button
+                            type="button" class="btn btn-primary col-md-1" data-btnnext> &gt; </button>
+                        <label id="fullmonthandyear" class="col-md-4"></label>
+                    </div>
                     <table class="col-md-12">
                         <thead class="days-week">
                             <tr>
@@ -56,6 +69,16 @@
                         <tbody class="number-days">
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div id="agendas">
+                    </div>
                 </div>
             </div>
         </div>

@@ -28,3 +28,10 @@
     background-color: #58595B;
     color: white !important;
 }
+.btn-calendar {
+    padding: 10px;
+
+}
+.btn-calendar button{
+   margin: 2px !important;
+}
