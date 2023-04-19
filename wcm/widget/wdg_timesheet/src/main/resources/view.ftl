@@ -12,17 +12,18 @@
                         <div class="col-md-6">
                             <label for="searchFilter">Buscar Por</label>
                             <div class="input-search">
-                                <select id="searchFilter" data-SearchFilter>
+                                <select id="searchFilter" data-selectSearchFilter>
                                     <option value="c">cliente</option>
                                     <option value="p">Projeto</option>
                                 </select>
                                 <input id="inputSearchFilter" type="text" class="form-control filter-process-input"
-                                    placeholder="...">
+                                    placeholder="..." data-searchfilter>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="projectstatus">Status do Projeto</label>
-                            <input id="projectstatus" type="text" class="form-control " placeholder="Pesquisar..">
+                            <input id="projectstatus" type="text" class="form-control " placeholder="Pesquisar.."
+                                data-statusfilter>
                         </div>
                     </div>
                     <div class="row">
