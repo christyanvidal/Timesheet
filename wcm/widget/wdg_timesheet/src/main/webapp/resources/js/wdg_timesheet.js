@@ -24,14 +24,16 @@ var MyWidget = SuperWidget.extend({
         while (day <= endOfCalendar) {
             html += day.getDay() === 0 ? '<tr>' : ''
             html += '<td'
-            if (day.getMonth() !== today.getMonth() || day.getDay() === 0 || (day.getDate() == today.getDate() && day.getMonth() == today.getMonth() && day.getFullYear() == today.getFullYear())) {
+            if (day.getMonth() !== today.getMonth() || day.getDay() === 0 || (day.getDate() == today.getDate() && day.getMonth() == today.getMonth() && day.getFullYear() == today.getFullYear()) || this.dateFilterCalendar) {
                 html += ' class="'
                 html += day.getMonth() !== today.getMonth() ? 'other-months ' : ''
                 html += day.getDay() === 0 ? 'sunday ' : ''
                 html += (day.getDate() == today.getDate() && day.getMonth() == today.getMonth() && day.getFullYear() == today.getFullYear()) ? 'today ' : ''
+                if (this.dateFilterCalendar)
+                    html += (day.getDate() == this.dateFilterCalendar.getDate() && day.getMonth() == this.dateFilterCalendar.getMonth() && day.getFullYear() == this.dateFilterCalendar.getFullYear()) ? 'selected-day ' : ''
                 html += '"'
             }
-            html += `>${day.getDate()}</td>`
+            html += ` data-daycalendar>${day.getDate()}</td>`
             html += day.getDay() === 6 ? '</tr>' : ''
             day.setDate(day.getDate() + 1)
         }
@@ -61,7 +63,8 @@ var MyWidget = SuperWidget.extend({
             'btnnext': ['click_calendarNextMonth'],
             'btntoday': ['click_calendarUpdate'],
             'searchfilter': ['blur_filterTable'],
-            'statusfilter': ['blur_filterTable']
+            'statusfilter': ['blur_filterTable'],
+            'daycalendar': ['click_selectDayCalendar']
         },
         global: {}
     },
@@ -144,7 +147,10 @@ var MyWidget = SuperWidget.extend({
                 { 'title': 'Projeto' },
                 { 'title': 'Data' },
                 { 'title': 'Status' }
-            ]
+            ],
+            search: {
+                enabled: false
+            }
         }, function (err, data) {
             if (data) {
                 that.dataInit = data;
@@ -158,6 +164,7 @@ var MyWidget = SuperWidget.extend({
         });
     },
     filterTable: function () {
+        var that = this
         this.myTable.reload(
             this.dataInit.filter(
                 function (el) {
@@ -167,8 +174,21 @@ var MyWidget = SuperWidget.extend({
                             el.project.toUpperCase() == $('#inputSearchFilter').val().toUpperCase())
                         && (!$('#projectstatus').val() ?
                             true : el.status.toUpperCase() == $('#projectstatus').val().toUpperCase())
+                        && (!that.dateFilterCalendar ?
+                            true : el.date.getDate() == that.dateFilterCalendar.getDate() && el.date.getMonth() == that.dateFilterCalendar.getMonth() && el.date.getFullYear() == that.dateFilterCalendar.getFullYear())
                 }
             )
         )
+    },
+    selectDayCalendar: function (htmlElement) {
+        if ($(htmlElement).is(".selected-day")) {
+            this.dateFilterCalendar = null
+            $(htmlElement).removeClass("selected-day")
+        } else {
+            this.dateFilterCalendar = new Date(this.calendarYear, this.calendarMonth, $(htmlElement).text())
+            $(htmlElement).closest('tbody').find('.selected-day').removeClass('selected-day')
+            $(htmlElement).addClass("selected-day")
+        }
+        this.filterTable()
     }
 });

@@ -13,7 +13,7 @@
                             <label for="searchFilter">Buscar Por</label>
                             <div class="input-search">
                                 <select id="searchFilter" data-selectSearchFilter>
-                                    <option value="c">cliente</option>
+                                    <option value="c">Cliente</option>
                                     <option value="p">Projeto</option>
                                 </select>
                                 <input id="inputSearchFilter" type="text" class="form-control filter-process-input"
@@ -31,13 +31,6 @@
                             <label for="systemfilter">Filtros do Sistema</label>
                             <input id="systemfilter" type="text" class="form-control " placeholder="Pesquisar..">
                         </div>
-                        <div class="col-md-6">
-                            <div> <label> Exibir somente favoritos </label></div>
-                            <div class="switch switch-primary">
-                                <input class="switch-input" type="checkbox" id="switch-1-1" />
-                                <label class="switch-button" for="switch-1-1">Toggle</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -45,7 +38,8 @@
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title"><i class="flaticon flaticon-group-person icon-xl"></i>
+                    <h2 class="panel-title"><i class="flaticon flaticon-perm-contact-calendar icon-xl"
+                            aria-hidden="true"></i>
                         Calendário</h2>
                 </div>
                 <div class="panel-body">

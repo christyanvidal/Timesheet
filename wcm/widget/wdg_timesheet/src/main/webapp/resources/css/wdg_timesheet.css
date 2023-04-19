@@ -4,10 +4,12 @@
 
 .number-days td {
     color: rgb(20, 20, 20) !important;
+    cursor: pointer;
 }
 
-.today {
-    color: rgb(245, 140, 140) !important;
+.number-days .today {
+    color: red !important;
+    font-weight: bold;
 }
 
 .other-months {
@@ -30,8 +32,11 @@
 }
 .btn-calendar {
     padding: 10px;
-
 }
 .btn-calendar button{
    margin: 2px !important;
+}
+.number-days .selected-day {
+    color: blue !important;
+    font-weight: bold;
 }
